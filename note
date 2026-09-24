@@ -1,0 +1,37 @@
+def main_text():
+    return f"""
+    ====================================
+                QUIZ GAME
+    ====================================
+    """
+def display_question(number,q):
+    print(f"Question {number}")
+    print(q["question"])
+    for i,option in enumerate (q["options"], start = 0):
+        letter = chr(97 + i)
+        print(f"{letter}. {option}")
+
+def get_user_answer(q):
+    valid_letters = []
+    for i in range(len(q["options"])):
+        valid_letters.append(chr(97 + i))
+    while True:
+        user_answer = input("select your answer: ").strip().lower()
+        if len(user_answer) == 1 and user_answer in valid_letters:
+            return user_answer
+        print("Invalid input, try again.")
+
+def run_quiz(questions):
+    score = 0
+    for index,i in enumerate(questions, start = 1):
+        display_question(index, i)
+        user_answer = get_user_answer(i)
+        ind = ord(user_answer) - 97
+        option_text = i["options"][ind]
+        if option_text.strip().lower() == i["answer"].strip().lower():
+            score+=1
+            print("correct")
+        else:
+            print("wrong")
+    return score
+
